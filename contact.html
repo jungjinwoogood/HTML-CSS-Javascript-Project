@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>상담신청</title>
+    <link rel="stylesheet" href="./css/hpconsulting.css">
+    <link rel="stylesheet" href="./css/contact.css">       
+</head>
+<body>
+    <div class="wrap">
+        <header>
+          <div class="inner"><!-- active : 모바일 메뉴 열렸을 때 --> 
+            <h1 class="logo"><a href="hpconsulting.html" target="_self"></a></h1>
+            <a href="" class="btn">전체메뉴</a>   
+            <nav class="main_menu">              
+                <ul>
+                    <li><!-- sub : 하위메뉴가 있을때, active : 하위 메뉴 열림 -->
+                        <a href="">Who We Are</a>
+                        <ul>
+                                <li><a href="">HPC컨설팅 소개</a></li>
+                                <li><a href="">보도자료</a></li>
+                                <li><a href="">공지사항</a></li>                               
+                        </ul>                        
+                    </li>
+                    <li>
+                        <a href="">Our Services</a>
+                        <ul>
+                                <li><a href="">인적자원관리 (HRM)</a></li>
+                                <li><a href="">인적자원개발 (HRD)</a></li>
+                                <li><a href="">조직개발</a></li>
+                                <li><a href="">일터혁신</a></li>
+                                <li><a href="">제조혁신</a></li>
+                        </ul>                       
+                    </li>
+                    <li>
+                        <a href="">Consultants</a>
+                    </li>
+                    <li>
+                        <a href="">Case Studies</a>
+                    </li>
+                    <li>
+                        <a href="">Insights</a>                       
+                       
+                    </li>
+                </ul>
+            </nav>
+            <nav class="util_menu">
+                <a href="contact.html" target="_self"><button class="btn dark">상담신청</button></a>
+            </nav>
+          </div>   
+        </header>
+        <div class="backdrop"></div>
+        <script>
+            const innerEl = document.querySelector('.inner');
+            const menuEl =  innerEl.querySelector('.main_menu');
+            const menuEls = innerEl.querySelectorAll('.main_menu > ul > li');
+            const backdropEl = document.querySelector('.backdrop');
+            const btnEl = innerEl.querySelector('.btn');
+            let delay;
+            const deskTopMenu = {
+                enterWork: function (e){	
+                    if (!e.target.classList.contains('sub')) return;
+                    console.log(e.target);	
+                    e.target.classList.add('active');
+                    backdropEl.classList.add('on');
+                    },
+                leaveWork: function (e){	
+                    if (!e.target.classList.contains('sub')) return;                    
+                    e.target.classList.remove('active');
+                    backdropEl.classList.remove('on');	
+                    },
+                startWork: function(){		
+                    menuEl.removeEventListener('click', mobileMenu.clickWork);
+                    btnEl.removeEventListener('click', mobileMenu.openMenu);
+                    menuEls.forEach(a => {
+                        a.addEventListener('mouseenter', deskTopMenu.enterWork);
+                        a.addEventListener('mouseleave', deskTopMenu.leaveWork);
+                    });
+                } , 
+            }
+            const mobileMenu = {
+                clickWork: function (e){
+                    e.preventDefault();
+                    if (e.target.tagName !== 'A') return;
+                    const liEl = e.target.parentElement;	
+                    if (!liEl.classList.contains('sub')) return;
+                    liEl.classList.toggle('active');
+                },
+                openMenu: function(e){
+                    e.preventDefault();		
+                    innerEl.classList.toggle('active');
+                    //두번째 메뉴가 열려있게 
+                    menuEls[1].classList.add('active');
+                },
+                startWork: function(){  
+                    menuEls.forEach(a => {
+                        a.removeEventListener('mouseenter', deskTopMenu.enterWork);
+                        a.removeEventListener('mouseleave', deskTopMenu.leaveWork);
+                    });		
+                    menuEl.addEventListener('click', mobileMenu.clickWork);
+                    btnEl.addEventListener('click', mobileMenu.openMenu);                                     
+                },
+            }
+            init();
+            function init(){
+                window.addEventListener('resize', () => {
+                clearTimeout(delay);
+                delay = setTimeout(checkSize, 50);
+                });
+                checkSize();
+                resetMenu();
+            }	
+            function resetMenu(){ 
+                //데스크탑으로 바뀔때 모바일메뉴 닫히게                
+                innerEl.classList.remove('active');                                      
+                menuEls.forEach(li => {
+                    li.classList.remove('active');
+                    if(li.querySelector('ul')) li.classList.add('sub');               
+                });               
+            }
+            function checkSize(){                  
+                if (window.innerWidth < 1024){                    
+                    mobileMenu.startWork();
+                } else {
+                    resetMenu();
+                    deskTopMenu.startWork();	
+                }
+            }            
+        </script>
+    <!-- 입력양식 사용자정보 받아 서버로 전송 -->
+        <main class="contact"> 
+            <div class="inner">           
+                <div class="user" >
+                    <h2>상담신청</h2>
+                    <h4>전문 컨설턴트 상담신청</h4>
+                    <p>궁금하신 점을 간략히 남겨주시면 빠른 시일 내에 연락 드리겠습니다.</p>  
+
+                    <div class="user name">
+                        <label for="name">성함</label>
+                        <input type="text" id="name"  placeholder="홍길동"/>                           
+                    </div>        
+                    <div class="user company">
+                        <label for="company">회사명</label>
+                        <input type="text" id="company"  placeholder="HPC컨설팅"/>                           
+                    </div>
+                    <div class="user tel">
+                        <label for="tel">연락처<span> *</span></label>
+                        <input type="text" id="tel"  placeholder="02-555-9838"/>                           
+                    </div>
+                    <div class="user email">
+                        <label for="email">이메일<span> *</span></label>
+                        <input type="text" id="email"  placeholder="contact@hpcconsulting.co.kr"/>                           
+                    </div>
+                    <div class="user select">
+                        <label for="select">컨설팅 분야<span> *</span></label>
+                        <select title="컨설팅분야선택" id="select" required> 
+                            <!-- selected="selected" -->
+                            <option value="" disabled selected hidden>컨설팅 분야를 선택해 주세요.</option>
+                            <option>인적자원관리</option>
+                            <option>인적자원개발</option>
+                            <option>조직체 개선</option>
+                            <option>일터혁신</option>
+                            <option>제조혁신</option>
+                            <option>기타</option>
+                        </select>                          
+                    </div>
+                    <div class="user textarea">
+                        <label for="textarea">무엇을 도와드릴까요?</label>
+                        <textarea rows="5" cols="50" maxlength="200" title="방명록" id="textarea">궁금한 점을 남겨주세요.</textarea>                           
+                    </div>
+                    <div>
+                        <p class="message"><span>*</span> 필수입력사항</p>                    
+                        <input type="checkbox" id="checkbox" /> 개인정보수집 및 이용약관에 동의합니다.    
+                        <input type="submit" value='무료상담신청' class="user btn dark add" />
+                    </div> 
+                </div>
+
+                <div>
+                    <h4>Q. 상담신청 후 컨설팅은 어떻게 이루어지나요?</h4>
+                    <ul class="article" >
+                        <li >                                
+                            <img src="./images/no1.png" />
+                            <strong>상담신청</strong>
+                            <p class="desc">모든 상담 내용은 비밀이 보장됩니다.</p>  
+                        </li>
+                        <li>                                
+                            <img src="./images/no2.png"/>
+                            <strong>담당 컨설턴트 배정</strong>
+                            <p class="desc">상담 내용을 검토 후 분야의 전문컨설턴트를 배정합니다.</p>  
+                        </li>
+                        <li>                                
+                            <img src="./images/no3.png"/>
+                            <strong>기업분석 및 솔루션 제안</strong>
+                            <p class="desc">면밀하게 요구사항을 검토 후 실행 가능한 솔루션을 제공합니다.</p>  
+                        </li>
+                        <li>                                
+                            <img src="./images/no4.png"/>
+                            <strong>컨설팅 실행</strong>
+                            <p class="desc">전문 컨설턴트가 실행에도 함께 참여해결과를 도출합니다.</p>  
+                        </li>
+                        <li>                                
+                            <img src="./images/no5.png"/>
+                            <strong>사후관리</strong>
+                            <p class="desc">컨설팅 실행 후 지속 경영이 이루어지도록 관리됩니다..</p>  
+                        </li>
+                    </ul>
+                </div>   
+            </div>
+    <!-- 필수입력사항 자바스크립트 -->
+            <script>
+                const inputTel = document.querySelector('#tel');
+                const inputEmail = document.querySelector('#email');
+                const checkboxEl = document.querySelector('#checkbox');
+                const selectEl = document.querySelector('#select');
+                const addBtn = document.querySelector('.add');
+                const message = document.querySelector('.message');
+                addBtn.addEventListener('click', addData);               
+                function addData() {
+                    if (inputTel.value === '') {
+                        showError('연락처를 입력해 주세요.');  
+                        return; 
+                    } else if (isNaN(inputTel.value)) {
+                        showError('연락처는 반드시 숫자만 입력해 주세요.');  
+                        return; 
+                    } else if(inputEmail.value === '') {
+                        showError('연락받으실 이메일을 입력해 주세요.');
+                        return; 
+                    } else if(selectEl.value === '' ) {
+                        showError('컨설팅 분야를 선택해 주세요.');
+                        return; 
+                    // } else if(!checkBox.checked) {
+                    //     showError('개인정보수집 및 이용약관에 동의해 주세요.');
+                    //     return;                    
+                    } else {  
+                        showMessage();
+                    }                
+                    function showError(msg) {
+                        message.textContent = msg;
+                        message.style.color = 'red';
+                    }
+                    function showMessage() {
+                        message.textContent = ` 
+                        연락처: ${inputTel.value}, 이메일: ${inputEmail.value}, ${selectEl.value}로 컨설팅 상담 신청하셨습니다.`;
+                        message.style.color = 'blue';
+                    }
+                }
+// 질문: checkboxEl 예외 처리를 해결하지 못하였습니다             
+            </script>
+        </main>
+        
+        <footer>
+            <div class="inner">
+                <div class="footer_inner"> 
+                    <div class="footer_info">                    
+                        <a href="hpconsulting.html" target="_self" ><h6 class="logo">HPCconsulting</h6></a>
+                        <p>생산성과 인사 혁신을 통한 현장중심의 차별화된 솔루션을 제공합니다.</p>
+                    </div>
+                  
+                    <div class="footer_link">
+                        <div class="who">
+                            <h6>Who We Are</h6>
+                            <a href="">회사소개</a>
+                            <a href="">컨설턴트</a>
+                            <a href="">보도자료</a>
+                            <a href="">공지사항</a>
+                        </div>
+                        <div class="service">
+                            <h6>Our Serivces</h6>
+                            <a href="">인적자원관리(HRM)</a>
+                            <a href="">인적자원개발(HRD)</a>
+                            <a href="">조직체계 개선</a>
+                            <a href="">일터혁신</a>
+                            <a href="">제조혁신</a>
+                        </div>
+                        <div class="resources">
+                            <h6>Resources</h6>
+                            <a href="">성공사례</a>
+                            <a href="">인사이트</a>
+                        </div>
+                    </div>
+                </div>
+            </div>                     
+                <div class="copyright">
+                    <div>(주)에이치피씨컨설팅 | 개인정보호담당자: 강혜정 | 02-555-9839ㅣ서울시 용산구 한강대로95, 래미안용산더센트럴 B동 413호
+                    </div>                   
+                    <div>이용약관ㅣ 개인정보호호정책 ㅣ © 2023 HPC Consulting Inc.</div>
+                  </div>
+        </footer>
+     </div>    
+</body>
+</html>

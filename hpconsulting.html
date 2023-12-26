@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hpconsulting</title>
+    <link rel="stylesheet" href="./css/hpconsulting.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"  />  
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>  
+    <style>
+        /* .study_swiper, .new_swiper {position: relative;}    */
+    </style>
+</head>
+<body>
+     <div class="wrap">
+        <header>
+          <div class="inner"><!-- active : 모바일 메뉴 열렸을 때 --> 
+            <h1 class="logo"><a href="hpconsulting.html" target="_self"></a></h1>
+            <a href="" class="btn">전체메뉴</a>   
+            <nav class="main_menu">              
+                <ul>
+                    <li><!-- sub : 하위메뉴가 있을때, active : 하위 메뉴 열림 -->
+                        <a href="">Who We Are</a>
+                        <ul>
+                                <li><a href="">HPC컨설팅 소개</a></li>
+                                <li><a href="">보도자료</a></li>
+                                <li><a href="">공지사항</a></li>                               
+                        </ul>                        
+                    </li>
+                    <li>
+                        <a href="">Our Services</a>
+                        <ul>
+                                <li><a href="">인적자원관리 (HRM)</a></li>
+                                <li><a href="">인적자원개발 (HRD)</a></li>
+                                <li><a href="">조직개발</a></li>
+                                <li><a href="">일터혁신</a></li>
+                                <li><a href="">제조혁신</a></li>
+                        </ul>                       
+                    </li>
+                    <li>
+                        <a href="">Consultants</a>
+                    </li>
+                    <li>
+                        <a href="">Case Studies</a>
+                    </li>
+                    <li>
+                        <a href="">Insights</a>                       
+                       
+                    </li>
+                </ul>
+            </nav>
+            <nav class="util_menu">
+                <a href="contact.html" target="_self"><button class="btn dark">상담신청</button></a>
+            </nav>
+          </div>   
+        </header>
+        <div class="backdrop"></div> 
+        <script>
+            const innerEl = document.querySelector('.inner');
+            const menuEl =  innerEl.querySelector('.main_menu');
+            const menuEls = innerEl.querySelectorAll('.main_menu > ul > li');
+            const backdropEl = document.querySelector('.backdrop');
+            const btnEl = innerEl.querySelector('.btn');
+            let delay;
+            const deskTopMenu = {
+                enterWork: function (e){	
+                    if (!e.target.classList.contains('sub')) return;
+                        console.log(e.target);	
+                        e.target.classList.add('active');	
+                        backdropEl.classList.add('on');
+                    },
+                leaveWork: function (e){	
+                    if (!e.target.classList.contains('sub')) return;                    
+                        e.target.classList.remove('active');
+                        backdropEl.classList.remove('on');	
+                    },
+                startWork: function(){		
+                    menuEl.removeEventListener('click', mobileMenu.clickWork);
+                    btnEl.removeEventListener('click', mobileMenu.openMenu);
+                    menuEls.forEach(a => {
+                        a.addEventListener('mouseenter', deskTopMenu.enterWork);
+                        a.addEventListener('mouseleave', deskTopMenu.leaveWork);
+                    });
+                } , 
+            }
+            const mobileMenu = {
+                clickWork: function (e){
+                    e.preventDefault();
+                    if (e.target.tagName !== 'A') return;
+                    const liEl = e.target.parentElement;	
+                    if (!liEl.classList.contains('sub')) return;
+                    liEl.classList.toggle('active');
+                },
+                openMenu: function(e){
+                    e.preventDefault();		
+                    innerEl.classList.toggle('active');
+                    //두번째 메뉴가 열려있게 
+                    menuEls[1].classList.add('active');
+                },
+                startWork: function(){  
+                    menuEls.forEach(a => {
+                        a.removeEventListener('mouseenter', deskTopMenu.enterWork);
+                        a.removeEventListener('mouseleave', deskTopMenu.leaveWork);
+                    });		
+                    menuEl.addEventListener('click', mobileMenu.clickWork);
+                    btnEl.addEventListener('click', mobileMenu.openMenu);                                     
+                },
+            }
+            init();
+            function init(){
+                window.addEventListener('resize', () => {
+                clearTimeout(delay);
+                delay = setTimeout(checkSize, 150);
+                });
+                checkSize();
+                resetMenu();
+            }	
+            function resetMenu(){ 
+                //데스크탑으로 바뀔때 모바일메뉴 닫히게                
+                innerEl.classList.remove('active');                                                      
+                menuEls.forEach(li => {
+                    li.classList.remove('active');
+                    if(li.querySelector('ul')) li.classList.add('sub');               
+                });               
+            }
+            function checkSize(){                  
+                if (window.innerWidth < 1024){                    
+                    mobileMenu.startWork();
+                } else {
+                    resetMenu();
+                    deskTopMenu.startWork();	
+                }
+            }            
+        </script>
+
+        <main>
+            <div class="visual">
+                <div class="description">
+                    <h2>Human & Productivity Innovator</h2>
+                    <p>HPC컨설팅은 근로자의 성장과 기업의 생산성 혁신을 동시에 추구합니다. </p>
+                </div>
+                <picture>
+                    <source srcset="./images/temp_visual_mobile.jpg" media="(min-width:720px)"/>
+                    <img src="./images/temp_visual_mobile.jpg"/>
+                </picture>
+            </div>
+            <div class="service">
+                <div class="inner">
+                    <div class="service_desc">
+                        <p>Our Services</p>
+                        <strong>HR 전 분야에 걸친 다양한 컨설팅 서비스와 생산성 혁신 서비스를 연계한 통합 솔루션으로 기업 경쟁력을 강화합니다.</strong>                   
+                        <ul class="tab_menu">
+                            <li>
+                                <div class="service_tab on">
+                                    <a href="">
+                                        <span class="hrm"></span>
+                                        <h4>인적자원관리 (HRM)</h4>
+                                    </a>
+                                </div>                                    
+                                <div class="service_cont on">
+                                    <a href="">
+                                        <p>조직, 전략, 문화, 구성원, 업무 프로세스 등 기업의 특성과 정합되도록 HRM 시스템을 구축함으로서 구성원의 동기부여를 강화하고 조직의 성과 달성을 지원합니다 </p>
+                                        <strong>더 알아보기</strong> 
+                                    </a>
+                                </div>
+                            </li>
+                            <li>    
+                                <div class="service_tab">                                    
+                                    <a href="">
+                                        <span class="hrd"></span>
+                                        <h4>인적자원개발 (HRD)</h4>
+                                    </a>
+                                </div>
+                                <div class="service_cont">
+                                    <a href="">
+                                        <p>급변하는 환경속에서 기업에 필요한 인재 및 역량을 명확히 정의하고, 효과적으로 개발할 수 있는 시스템을 구축하여 인적자원 경쟁력 확보를 지원합니다.</p>
+                                        <strong>더 알아보기</strong>
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="service_tab">
+                                         <a href="">
+                                            <span class="od"></span>
+                                            <h4>조직개발 (OD)</h4>
+                                        </a>
+                                </div>
+                                <div class="service_cont">
+                                    <a href="">
+                                        <p>기업 핵심경쟁력 및 조직역량을 고려한 조직체계, 프로세스, 인적자원 및 조직문화 혁신 활동을 통해 기업의 생산성을 향상하고, 성공적인 변화를 지원합니다.</p>
+                                        <strong>더 알아보기</strong> 
+                                    </a>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="service_tab">
+                                    <a href="">
+                                        <span class="workplace"></span>
+                                        <h4>일터혁신</h4>
+                                    </a>
+                                </div>
+                                <div class="service_cont">
+                                    <a href="">
+                                        <p>협력적 노사관계를 기반으로 근로자의 참여에 의하여 작업조직과 작업방식을 지속적으로 개선함으로써 생산성과 근로생활의 질 향상을 지원합니다.</p>
+                                        <strong>더 알아보기</strong>
+                                    </a>
+                                </div>
+                            </li>
+                            <li> 
+                                <div class="service_tab">
+                                    <a href="">
+                                        <span class="factory"></span>
+                                        <h4>제조혁신</h4>
+                                    </a>
+                                </div>
+                                <div class="service_cont"><!-- active : .service_cont display:none-> block으로 -->
+                                    <a href="">
+                                        <p>제조혁신 및 스마트 기술을 이용한 디지털 혁신 활동과 연계하여 고객사 생산특성에 적합한 제조혁신체계 구축을 지원합니다.</p>
+                                        <strong>더 알아보기</strong>
+                                    </a>
+                                </div>                               
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="service_photo">
+                        <img class="large" src="./images/temp_service.jpg"/>
+                        <img class="small" src="./images/temp_service_s.jpg"/>
+                    </div>
+                </div>
+            </div>
+            <script> 
+                //첫 탭메뉴 열려있게               
+                // 탭메뉴 작업  .tab_menu에 리스너
+                // 순서저장했다가 service_tab과 .service_cont에 on 클래스주기
+                // 다른.service_tab 클릭하면 기존 것 닫히고 클릭한 것 열림 
+                const tabMenu = document.querySelector(".tab_menu");               
+                const tabEls = document.querySelectorAll('.service_tab');
+                const tabConts = document.querySelectorAll('.service_cont');
+                console.log(tabEls, tabConts);
+                tabMenu.addEventListener('click', tabMenu2);
+                // 순서 저장
+                tabEls.forEach((div, i)=> div.index = i); // 순서를 노드에 기록                
+                function tabMenu2(e){ 
+                    e.preventDefault();                   
+                    const index = e.target.parentElement.parentElement.index; 
+                    //console.log(index);                 
+                    tabEls.forEach( div => div.classList.remove('on'));
+                    tabConts.forEach( div => div.classList.remove('on'));
+                    tabEls[index].classList.add('on');
+                    tabConts[index].classList.add('on');                    
+                }
+            </script>
+
+            <div class="study"> 
+                <div class="inner">
+                <div class="study_desc">
+                    <div>
+                        <p>Case Studies</p>
+                        <h2>HPC컨설팅과 함께한 회사들의 이야기를 들어보세요.</h2>
+                    </div>
+                    <div class="paging">
+                        <b class="swiper-prev"><a href="" ><img src="./images/prev_dg_btn.svg" alt='이전'></a></b>
+                        <b class="swiper-next"><a href="" ><img src="./images/next_dg_btn.svg" alt="이후"></a></b>
+                    </div>
+                </div>              
+                <div class="study_swiper">
+                    <ul class="swiper-wrapper">
+                        <li class="swiper-slide">
+                            <a href="">
+                                <img class="photo" src="./images/temp_case1 (2).jpg"/>
+                                <div class="desc">
+                                    <div class="description" >
+                                        <p>Consulting case</p>
+                                        <h5>제조업 회사의 일터혁신 성공 비결은?</h5>
+                                    </div>
+                                    <div class="avatar">                                       
+                                        <div class="text">
+                                            <strong>책임 컨설턴트</strong>
+                                            <span>정인성</span>
+                                        <div>
+                                    </div>
+                                </div>                                
+                            </a>
+                        </li>
+                        <li class="swiper-slide">
+                            <a href="">
+                                <img class="photo" src="./images/temp_case1 (3).jpg"/>
+                                <div class="desc">
+                                    <div class="description" >
+                                        <p>Consulting case</p>
+                                        <h5>제조 혁신이란 무엇이며, 어떻게 진행되는가?</h5>
+                                    </div>
+                                    <div class="avatar">                                       
+                                        <div class="text">
+                                            <strong>선임 컨설턴트</strong>
+                                            <span>한경희</span>
+                                        <div>
+                                    </div>                                   
+                                </div>
+                            </a>
+                        </li>
+                        <li class="swiper-slide"> 
+                            <a href="">
+                                <img class="photo" src="./images/temp_case1 (2).jpg"/>
+                                <div class="desc">
+                                    <div class="description" >
+                                        <p>Consulting case</p>
+                                        <h5>중소기업 현실이 반영된 ‘실제 직능제 도입’ 이야기</h5>
+                                    </div>
+                                    <div class="avatar">                                       
+                                        <div class="text">
+                                            <strong>수석 컨설턴트</strong>
+                                            <span>이병민</span>
+                                        <div>
+                                    </div> 
+                                </div>
+                            </a>
+                        </li>
+                        <li class="swiper-slide">
+                            <a href="">
+                                <img class="photo" src="./images/temp_case1 (3).jpg"/>
+                                <div class="desc">
+                                    <div class="description" >
+                                        <p>Consulting case</p>
+                                        <h5>중소기업에 ‘직무급’ 도입하는 방법 (과정 중심)</h5>
+                                    </div>
+                                    <div class="avatar">                                       
+                                        <div class="text">
+                                            <strong>책임 컨설턴트</strong>
+                                            <span>김수현</span>
+                                        <div>
+                                    </div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <!-- <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>  -->
+                </div>
+                <script>
+                    const study_swiper = new Swiper(".study_swiper", {                           
+                      spaceBetween:32,                     
+                    breakpoints: {
+                    200: {slidesPerView: 1},
+                   1024: {slidesPerView: 2},
+                   1280: {slidesPerView: 3}
+                    },
+                      navigation: {
+                        nextEl: ".swiper-next",
+                        prevEl: ".swiper-prev"
+                      }
+                    });
+                </script>
+                <div class="inner_btns">
+                    <button class="btn light">성공사례 전체보기</button>
+                </div>   
+                </div>
+            </div>
+            <div class="about">
+                <div class="inner">
+                    <div class="about_desc">
+                        <div>
+                            <p>Who We Are</p>
+                            <h2>뛰어난 현장 전문가들이 기업의 혁신을 지원합니다.</h2>
+                        </div>
+                        <div class="paging">
+                            <b class="swiper-prev"><a href="" ><img src="./images/prev_dg_btn.svg" alt='이전'></a></b>
+                            <b class="swiper-next"><a href="" ><img src="./images/next_dg_btn.svg" alt="이후"></a></b>
+                        </div>
+                    </div>                    
+                    <div class="new_swiper">
+                        <ul class="swiper-wrapper">
+                            <li class="swiper-slide">
+                                <a href="">
+                                    <img class="photo" src="./images/temp_photo0.png"/>                                                                           
+                                    <div class="desc">
+                                        <strong>대표이사</strong>
+                                        <span>강혜정</span>
+                                        <p>경영학 박사</p>
+                                    <div>                                                                                                      
+                                </a>
+                            </li>
+                            <li class="swiper-slide">
+                                <a href="">
+                                    <img class="photo" src="./images/temp_photo1.png"/>
+                                    <div class="desc">
+                                        <strong>수석 컨설턴트</strong>
+                                        <span>이병민</span>
+                                        <p>공인노무사</p>
+                                    <div>             
+                                </a>
+                            </li>
+                            <li class="swiper-slide"> 
+                                <a href="">
+                                    <img class="photo" src="./images/temp_photo2.png"/>
+                                    <div class="desc">
+                                        <strong>이사 / 수석 컨설턴트</strong>
+                                        <span>최우창</span>
+                                        <p>공인노무사</p>
+                                    <div>             
+                                </a>
+                            </li>
+                            <li class="swiper-slide">
+                                <a href="">
+                                    <img class="photo" src="./images/temp_photo3.png"/>
+                                    <div class="desc">
+                                        <strong>수석 컨설턴트</strong>
+                                        <span>김수현</span>
+                                        <p>HR 컨설팅</p>
+                                    <div>             
+                                </a>
+                            </li>
+                            <li class="swiper-slide">
+                                <a href="">
+                                    <img class="photo" src="./images/photo2.webp"/>
+                                    <div class="desc">
+                                        <strong>수석 컨설턴트</strong>
+                                        <span>김수현</span>
+                                        <p>HR 컨설팅</p>
+                                    <div>             
+                                </a>
+                            </li>
+                            <li class="swiper-slide">
+                                <a href="">
+                                    <img class="photo" src="./images/photo1.webp"/>
+                                    <div class="desc">
+                                        <strong>수석 컨설턴트</strong>
+                                        <span>김수현</span>
+                                        <p>HR 컨설팅</p>
+                                    <div>             
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- <div class="swiper-button-prev"></div>                            
+                        <div class="swiper-button-next"></div>  -->
+                    </div>
+                    <script>
+                        const new_swiper = new Swiper('.new_swiper', {                           
+                            spaceBetween:32,                           
+                          breakpoints: {
+                            200: {slidesPerView:2},
+                            1024: {slidesPerView:3},
+                            1280: {slidesPerView:4}                            
+                          },
+                          navigation: {
+                            nextEl: ".swiper-next",
+                            prevEl: ".swiper-prev"
+                          }
+                        });
+                    </script>
+                <div class="inner_btns">
+                    <button class="btn light">컨설턴트 전체보기</button>
+                </div>  
+            </div>                
+            </div>
+            <div class="client">
+                <div class="inner">
+                    <div class="client_desc">
+                        <p>Testimonials</p>
+                        <h2>이미 많은 기업이 혁신을 위해 HPC컨설팅을 선택하고 있습니다.</h2>
+                    </div>
+                    <div>
+                        <ul class="article">
+                            <li>                                
+                                <img src="./images/quote.png"/>
+                                <strong>연공서열 중심의 6직급체계를 역할 중심의 4직급체계로
+                                    단순화하여 성과/능력주의 조직문화를 구축하고 우수 인력의
+                                    유출을 방지할 수 있었습니다.
+                                </strong>
+                                <div class="desc">
+                                    <p class="grade"></p>                                
+                                    <strong>(주)경우시스테크</strong>
+                                    <span>이학렬 차장 </span>
+                                </div>
+                            </li>
+                            <li>                                
+                                <img src="./images/quote.png"/>
+                                <strong>수작업 조립라인을 자동화하고, 생산직 다기능 평가/
+                                    교육체계를 설계하여 고객의 수요변화에 유연하게 대응할 수
+                                    있는 효율적인 생산시스템을 구축할 수 있었습니다.
+                                </strong>
+                                <div class="desc">
+                                    <p class="grade"></p>
+                                    <strong>(주)고모텍</strong>
+                                    <span>홍연정 부장</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="client_logo">
+                        <ul>
+                            <li><img src="./images/삼성화재로고.jpg" /></li>
+                            <li><img src="./images/samsunglife.png" /></li>
+                            <li><img src="./images/영진약품로고.jpg" /></li>
+                            <li><img src="./images/seoulhospital.png" /></li>
+                            <li><img src="./images/worklabor.png "/></li> 
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        </main>
+        <aside>
+            <div class="inner">
+                <div class="desc">       
+                    <h2>전문 컨설턴트와 상담받고<br/>실천 가능한 해결책을 찾아보세요.</h2>                
+                    <a href="contact.html"><button class="btn dark">무료 상담신청</button></a> 
+                </div>            
+                <div class="shadow"></div>
+                <div class="photo"></div>
+            </div>
+        </aside>
+        <footer>
+            <div class="inner">
+                <div class="footer_inner"> 
+                    <div class="footer_info">                    
+                        <a href="hpconsulting.html" target="_self"> <h6 class="logo">HPCconsulting</h6></a>
+                        <p>생산성과 인사 혁신을 통한 현장중심의 차별화된 솔루션을 제공합니다.</p>
+                    </div>
+                  
+                    <div class="footer_link">
+                        <div class="who">
+                            <h6>Who We Are</h6>
+                            <a href="">회사소개</a>
+                            <a href="">컨설턴트</a>
+                            <a href="">보도자료</a>
+                            <a href="">공지사항</a>
+                        </div>
+                        <div class="service">
+                            <h6>Our Serivces</h6>
+                            <a href="">인적자원관리(HRM)</a>
+                            <a href="">인적자원개발(HRD)</a>
+                            <a href="">조직체계 개선</a>
+                            <a href="">일터혁신</a>
+                            <a href="">제조혁신</a>
+                        </div>
+                        <div class="resources">
+                            <h6>Resources</h6>
+                            <a href="">성공사례</a>
+                            <a href="">인사이트</a>
+                        </div>
+                    </div>
+                </div>
+            </div>                     
+                <div class="copyright">
+                    <div>(주)에이치피씨컨설팅 | 개인정보호담당자: 강혜정 | 02-555-9839ㅣ서울시 용산구 서빙고로 17, 1202호
+                    </div>                   
+                    <div>이용약관ㅣ 개인정보호호정책 ㅣ © 2023 HPC Consulting Inc.</div>
+                  </div>
+        </footer>
+
+     </div> 
+    <!-- <script src="./js/hpconsulthing.js"></script>    -->
+</body>
+</html>
